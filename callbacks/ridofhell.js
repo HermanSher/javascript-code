@@ -1,4 +1,4 @@
-const cart = [];
+const cart = ["kurtas","pants","jeans","pajamas"];
 
 const promise = createOrder(cart);
 promise
@@ -12,7 +12,23 @@ promise
   .then(function(paymentInfo){
     console.log(paymentInfo);
   })
-  .catch((err) => console.log(err.message));
+  .catch((err) => console.log(err.message))
+  .finally(()=> getData(cart))
+
+  //by using async/await
+ async function getData(cart){
+    try {
+        const orderData = await createOrder(cart);
+        console.log(orderData);
+        const paymentInfo = await proceedToPayment(orderData)
+        console.log(paymentInfo);
+    } catch (error) {
+        console.log(error.message);
+    }
+    
+ }
+//  getData(cart);
+
 
 function createOrder(cart) {
   const pr = new Promise((resolve, reject) => {
